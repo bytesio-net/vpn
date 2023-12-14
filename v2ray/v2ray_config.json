@@ -1,0 +1,60 @@
+{
+    "log": {
+        "loglevel": "info"
+    },
+    "inbounds": [
+        {
+            "listen": "0.0.0.0",
+            "port": 443,
+            "protocol": "vless",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "ed894da2-a8b4-40a3-84b5-59ed67ac6f2e",
+                        "level": 0,
+                        "email": "bytesionet@gmail.com"
+                    }
+                ],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "xtlsSettings": {
+                    "alpn": [
+                        "http/1.1"
+                    ],
+                    "certificates": [
+                        {
+                            "certificateFile": "/etc/v2ray/cloudflare.crt",
+                            "keyFile": "/etc/v2ray/private.key"
+                        }
+                    ],
+                    "minVersion": "tls1.2"
+                }
+            }
+        }
+    ],
+    "outbounds": [
+        {
+            "protocol": "socks",
+            "settings": {
+                "servers": [
+                    {
+                        "port": 1194,
+                        "address": "localhost"
+                    }
+                ]
+            },
+            "streamSettings": {
+                "tcpSettings": {
+                    "header": {
+                        "type": "none"
+                    }
+                },
+                "network": "tcp",
+                "security": "none"
+            },
+            "tag": "streaming"
+        }
+    ]
+}
