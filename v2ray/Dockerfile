@@ -12,6 +12,6 @@ RUN curl -L -o /tmp/v2ray.zip https://github.com/v2fly/v2ray-core/releases/lates
 
 RUN ln -s /usr/share/zoneinfo/Hongkong /etc/localtime
 
-EXPOSE 443
+EXPOSE 8443
 
 CMD ["/usr/local/bin/v2ray", "run", "-config", "/etc/v2ray/v2ray_config.json"]
