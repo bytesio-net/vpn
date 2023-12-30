@@ -2,23 +2,36 @@
 
 Provides simple secure VPN setup that combines a V2Ray server with an OpenVPN client. With the OpenVPN client, you can use your router's OpenVPN server, meaning the VPN can using your own IP address to access some regional services like ViuTV, MyTV, and more.
 
+## Todo
+- [x] Nginx Reverse proxy (TLS)
+- [x] V2ray ws Server
+- [ ] OpenVPN Client/Server
+
 ## Setup
 ```bash
 .
+├── nginx
+│   ├── Dockerfile
+│   ├── nginx.conf
+│   └── ssl
+│       ├── cloudflare.pem  # CA cert
+│       └── private.pem     # Private Key
 ├── openvpn-client
 │   ├── Dockerfile
-│   ├── client.ovpn  # Please put your openvpn config file here
-│   └── credentials  # Login Username (first line) and Password (second line)
+│   ├── client.ovpn         # Please put your openvpn config file here
+│   └── credentials         # Login Username (first line) and Password (second line)
+├── setup                   # Setup Shell Script
+│   ├── amazon-linux.sh
+│   └── ubuntu.sh
 └── v2ray
     ├── Dockerfile
-    ├── cloudflare.crt   # your domain CA cert
-    ├── private.key      # Domain Private key
-    └── v2ray_config.json
-
+    └── v2ray_config.json   # V2ray Config
 ```
 
 ## Start Service
 ```bash
+git clone https://github.com/bytesio-net/vpn.git
+cd vpn
 docker-compose up -d
 ```
 
