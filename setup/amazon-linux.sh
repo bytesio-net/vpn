@@ -1,4 +1,4 @@
-!/bin/sh
+#!/bin/sh
 
 sudo yum upgrade && sudo yum update
 sudo yum install -y docker git python3-pip

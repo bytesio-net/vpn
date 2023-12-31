@@ -1,19 +1,18 @@
 version: '3'
 
 services:
-  # openvpn-client:
-  #   build:
-  #     context: ./openvpn-client
-  #   volumes:
-  #     - ./openvpn-client:/etc/openvpn
-  #   ports:
-  #     - 1194:1194
-  #   cap_add:
-  #     - NET_ADMIN
-  #   devices:
-  #     - /dev/net/tun
-  #   networks:
-  #     - vpn-net
+  openvpn-client:
+    build:
+      context: ./openvpn-client
+    volumes:
+      - ./openvpn-client:/etc/openvpn
+    ports:
+      - 1080:1080
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun
+    restart: always
 
   v2ray:
     build:
@@ -22,8 +21,8 @@ services:
       - ./v2ray:/etc/v2ray
     ports:
       - 8443:8443
-    # depends_on:
-    #   - openvpn-client
+    depends_on:
+      - openvpn-client
   
   nginx:
     build:
@@ -35,4 +34,4 @@ services:
       - 80:80
     depends_on:
       - v2ray
-    # restart: always
+    restart: always

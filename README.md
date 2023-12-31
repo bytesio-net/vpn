@@ -5,7 +5,8 @@ Provides simple secure VPN setup that combines a V2Ray server with an OpenVPN cl
 ## Todo
 - [x] Nginx Reverse proxy (TLS)
 - [x] V2ray ws Server
-- [ ] OpenVPN Client/Server
+- [x] OpenVPN Client/Server with Socks5 Proxy
+- [ ] Integrate v2ray and openvpn client
 
 ## Setup
 ```bash
