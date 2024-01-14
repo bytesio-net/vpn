@@ -1,11 +1,9 @@
 #!/bin/sh
 
-# Start OpenVPN in the background
-openvpn --config /etc/openvpn/client.ovpn --auth-user-pass /etc/openvpn/credentials --log /var/log/openvpn.log &
+sed -i "s:sysctl -q net.ipv4.conf.all.src_valid_mark=1:echo Skipping setting net.ipv4.conf.all.src_valid_mark:" /usr/bin/wg-quick
 
-# Give some time for OpenVPN to initialize
-sleep 10
-
-# Start sockd in the foreground and keep the script running
-sockd -D -f /etc/sockd.conf
-tail -f /dev/null
+set -e
+ifname=$(basename $(ls -1 /etc/wireguard/*.conf | head -1) .conf)
+wg-quick up /etc/wireguard/$ifname.conf
+sed -i'' -e "s/__replace_me_ifname__/$ifname/" /etc/sockd.conf
+/usr/sbin/sockd

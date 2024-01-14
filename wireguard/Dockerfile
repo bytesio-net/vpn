@@ -2,15 +2,10 @@
 FROM alpine:3.19
 
 # Install OpenVPN and socat
-RUN apk add openvpn dante-server bash openresolv openrc \
+RUN apk add --update-cache dante-server wireguard-tools openresolv ip6tables curl\
     && rm -rf /var/cache/apk/*
 
-RUN mkdir -p /dev/net &&\
-    mknod /dev/net/tun c 10 200 && \
-    chmod 600 /dev/net/tun
-
-COPY ./client.ovpn /etc/openvpn/client.ovpn
-COPY ./credentials /etc/openvpn/credentials
+COPY ./wg_client.conf /etc/wireguard/wg0.conf
 COPY ./sockd.conf /etc/sockd.conf
 COPY ./entrypoint.sh /etc/entrypoint.sh
 

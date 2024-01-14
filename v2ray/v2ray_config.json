@@ -1,52 +1,72 @@
 {
     "log": {
-        "loglevel": "info"
+      "loglevel": "info"
     },
     "inbounds": [
-        {
-            "listen": "0.0.0.0",
-            "port": 8443,
-            "protocol": "vmess",
-            "settings": {
-                "clients": [
-                    {
-                        "id": "ed894da2-a8b4-40a3-84b5-59ed67ac6f2e",
-                        "level": 1,
-                        "alterId": 64
-                    }
-                ],
-                "decryption": "none"
-            },
-            "streamSettings": {
-                "network": "ws",
-                "security": "none",
-                "wsSettings": {
-                    "path": "/api/ws/forward",
-                    "header": {}
-                }
+      {
+        "listen": "0.0.0.0",
+        "port": 8443,
+        "protocol": "vmess",
+        "settings": {
+          "clients": [
+            {
+              "id": "ed894da2-a8b4-40a3-84b5-59ed67ac6f2e",
+              "level": 1,
+              "alterId": 64
             }
+          ],
+          "decryption": "none"
+        },
+        "streamSettings": {
+          "network": "ws",
+          "security": "none",
+          "wsSettings": {
+            "path": "/api/ws/forward",
+            "header": {}
+          }
+        },
+        "sniffing": {
+          "enabled": true,
+          "destOverride": ["http", "tls"]
         }
+      }
     ],
     "outbounds": [
-        {
-            "protocol": "freedom",
-            "settings": {}
+      {
+        "protocol": "socks",
+        "settings": {
+          "servers": [
+            {
+              "port": 1080,
+              "address": "wireguard-client"
+            }
+          ]
         },
-        {
-            "protocol": "blackhole",
-            "settings": {},
-            "tag": "blocked"
-        }
+        "streamSettings": {
+          "tcpSettings": {
+            "header": {
+              "type": "none"
+            }
+          },
+          "network": "tcp",
+          "security": "none"
+        },
+        "tag": "streaming"
+      },
+      {
+        "protocol": "blackhole",
+        "settings": {},
+        "tag": "blocked"
+      }
     ],
     "routing": {
-        "rules": [
-            {
-                "type": "field",
-                "ip": [
-                    "geoip:private"
-                ],
-                "outboundTag": "blocked"
-            }
-        ]
+      "rules": [
+        {
+          "type": "field",
+          "ip": ["geoip:private"],
+          "outboundTag": "blocked"
+        }
+      ]
     }
-}
+  }
+  

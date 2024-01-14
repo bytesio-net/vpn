@@ -1,6 +1,8 @@
+**/*.DS_Store
+
 */**/*.key
 */**/*.crt
 */**/*.pem
 */credentials
 */*.ovpn
-openvpn-client/surshark/**
+wireguard/**/wg_client.conf

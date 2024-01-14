@@ -1,18 +1,17 @@
 version: '3'
 
 services:
-  openvpn-client:
+  wireguard-client:
     build:
-      context: ./openvpn-client
-    volumes:
-      - ./openvpn-client:/etc/openvpn
+      context: ./wireguard
     ports:
-      - 1080:1080
+      - 9050:1080
     cap_add:
       - NET_ADMIN
-    devices:
-      - /dev/net/tun
-    restart: always
+      - SYS_MODULE
+    networks:
+      - net
+    restart: unless-stopped
 
   v2ray:
     build:
@@ -21,8 +20,11 @@ services:
       - ./v2ray:/etc/v2ray
     ports:
       - 8443:8443
+    networks:
+      - net
     depends_on:
-      - openvpn-client
+      - wireguard-client
+
   
   nginx:
     build:
@@ -34,4 +36,10 @@ services:
       - 80:80
     depends_on:
       - v2ray
+    networks:
+      - net
     restart: always
+
+networks:
+  net:
+    driver: bridge
